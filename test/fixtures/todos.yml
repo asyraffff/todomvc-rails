@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  completed: false
+  title: Install Ruby
+  completed: true
 
 two:
-  title: MyString
+  title: Learn Rails
+  completed: false
+
+three:
+  title: Learn Stimulus JS
   completed: false
