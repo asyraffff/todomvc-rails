@@ -16,5 +16,5 @@ class Todo < ApplicationRecord
     def self.toggle_all!
       update_all(completed: active.any?)
     end
-  end
+end
   
