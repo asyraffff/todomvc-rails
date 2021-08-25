@@ -1,0 +1,42 @@
+<%= check_box_tag 'toggle-all', '1', Todo.active.none?,
+  data: { remote: true, url: toggle_all_todos_url, method: :patch },
+  class: 'toggle-all'
+%>
+<%= label_tag 'toggle-all', 'Mark all as complete' %>
+<ul class="todo-list">
+  <% @todos.each do |todo| %>
+    <li
+      class="<%= 'completed' if todo.completed? %>"
+      data-controller='editable'
+      data-target='editable.item'
+    >
+      <div class="view">
+        <%= check_box_tag nil, nil, todo.completed,
+          data: {
+            remote: true,
+            url: todo_path(todo),
+            params: { todo: { completed: !todo.completed } }.to_param,
+            method: :patch
+          },
+          class: 'toggle',
+          id: nil
+        %>
+        <label
+          data-target='editable.label'
+          data-action='dblclick->editable#showInput'
+        ><%= todo.title %></label>
+        <%= button_to(todo, remote: true, method: :delete, class: 'destroy') {} %>
+      </div>
+      <%= form_with model: todo, data: { target: 'editable.form' } do |form| %>
+        <%= form.text_field :title,
+          class: 'edit',
+          data: {
+            target: 'editable.input',
+            action: 'blur->editable#submitForm keydown->editable#escapeInput'
+          },
+          id: nil
+        %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
